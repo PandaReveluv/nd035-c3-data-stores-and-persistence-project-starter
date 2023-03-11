@@ -1,5 +1,8 @@
-package com.udacity.jdnd.course3.critter.user;
+package com.udacity.jdnd.course3.critter.controller;
 
+import com.udacity.jdnd.course3.critter.dto.users.CustomerDTO;
+import com.udacity.jdnd.course3.critter.dto.users.EmployeeDTO;
+import com.udacity.jdnd.course3.critter.dto.users.EmployeeRequestDTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.DayOfWeek;
