@@ -9,7 +9,6 @@ import java.time.LocalDate;
 @Entity
 @Data
 public class Pet {
-
     @Id
     @GeneratedValue
     private long id;
@@ -19,4 +18,10 @@ public class Pet {
     private long ownerId;
     private LocalDate birthDate;
     private String notes;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "schedule_id")
+    private Schedule schedule;
 }
