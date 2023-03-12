@@ -2,7 +2,10 @@ package com.udacity.jdnd.course3.critter.mapper;
 
 import com.udacity.jdnd.course3.critter.dto.users.CustomerDTO;
 import com.udacity.jdnd.course3.critter.entity.Customer;
+import com.udacity.jdnd.course3.critter.entity.Pet;
 import org.springframework.stereotype.Component;
+
+import java.util.stream.Collectors;
 
 @Component
 public class CustomerMapper {
@@ -23,7 +26,9 @@ public class CustomerMapper {
         customerDTO.setName(customer.getName());
         customerDTO.setNotes(customer.getNotes());
         customerDTO.setPhoneNumber(customer.getPhoneNumber());
-        customerDTO.setPetIds(null);
+        customerDTO.setPetIds(customer.getPetIds().stream()
+                .map(Pet::getId)
+                .collect(Collectors.toList()));
         return customerDTO;
     }
 }

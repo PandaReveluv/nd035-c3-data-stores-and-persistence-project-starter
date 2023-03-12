@@ -40,13 +40,17 @@ public class PetController {
     public List<PetDTO> getPets(){
 
         List<Pet> pets = petService.getAllPets();
-        return pets.stream().map(pet -> petMapper.petToPetDTO(pet)).collect(Collectors.toList());
+        return pets.stream()
+                .map(pet -> petMapper.petToPetDTO(pet))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/owner/{ownerId}")
     public List<PetDTO> getPetsByOwner(@PathVariable long ownerId) {
 
         List<Pet> pets = petService.getPetsByOwnerId(ownerId);
-        return pets.stream().map(pet -> petMapper.petToPetDTO(pet)).collect(Collectors.toList());
+        return pets.stream()
+                .map(pet -> petMapper.petToPetDTO(pet))
+                .collect(Collectors.toList());
     }
 }

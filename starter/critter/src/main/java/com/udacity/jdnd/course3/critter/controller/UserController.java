@@ -3,6 +3,7 @@ package com.udacity.jdnd.course3.critter.controller;
 import com.udacity.jdnd.course3.critter.dto.users.CustomerDTO;
 import com.udacity.jdnd.course3.critter.dto.users.EmployeeDTO;
 import com.udacity.jdnd.course3.critter.dto.users.EmployeeRequestDTO;
+import com.udacity.jdnd.course3.critter.entity.Customer;
 import com.udacity.jdnd.course3.critter.mapper.CustomerMapper;
 import com.udacity.jdnd.course3.critter.mapper.EmployeeMapper;
 import com.udacity.jdnd.course3.critter.service.CustomerService;
@@ -16,6 +17,7 @@ import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Handles web requests related to Users.
@@ -47,12 +49,17 @@ public class UserController {
 
     @GetMapping("/customer")
     public List<CustomerDTO> getAllCustomers(){
-        throw new UnsupportedOperationException();
+
+        List<Customer> customers = customerService.getAllCustomers();
+        return customers.stream()
+                .map(customer -> customerMapper.customerToCustomerDTO(customer))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/customer/pet/{petId}")
     public CustomerDTO getOwnerByPet(@PathVariable long petId){
-        throw new UnsupportedOperationException();
+
+        return customerMapper.customerToCustomerDTO(customerService.getOwnerByPetId(petId));
     }
 
     @PostMapping("/employee")
