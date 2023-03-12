@@ -6,10 +6,12 @@ import com.udacity.jdnd.course3.critter.entity.Pet;
 import com.udacity.jdnd.course3.critter.entity.Schedule;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class PetMapper {
 
-    public Pet petDTOToPet(PetDTO petDTO, Customer customer, Schedule schedule) {
+    public Pet petDTOToPet(PetDTO petDTO, Customer customer, List<Schedule> schedules) {
         Pet pet = new Pet();
         pet.setId(petDTO.getId());
         pet.setName(petDTO.getName());
@@ -17,7 +19,7 @@ public class PetMapper {
         pet.setType(petDTO.getType());
         pet.setBirthDate(petDTO.getBirthDate());
         pet.setCustomer(customer);
-        pet.setSchedule(schedule);
+        pet.setSchedule(schedules);
         return pet;
     }
 

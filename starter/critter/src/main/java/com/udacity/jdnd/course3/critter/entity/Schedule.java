@@ -15,9 +15,11 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "schedule", cascade = CascadeType.ALL)
+    @ManyToMany
+    @JoinColumn(name = "schedule_id", referencedColumnName = "id")
     private List<Employee> employeeIds;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "schedule", cascade = CascadeType.ALL)
+    @ManyToMany
+    @JoinColumn(name = "schedule_id", referencedColumnName = "id")
     private List<Pet> petIds;
     private LocalDate date;
     @Enumerated(EnumType.STRING)

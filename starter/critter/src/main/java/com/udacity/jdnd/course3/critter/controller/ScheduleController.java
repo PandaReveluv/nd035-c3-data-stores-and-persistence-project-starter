@@ -38,23 +38,6 @@ public class ScheduleController {
     public ScheduleDTO createSchedule(@RequestBody ScheduleDTO scheduleDTO) {
 
         Schedule schedule = scheduleService.addNewSchedule(scheduleDTO);
-
-        List<Pet> pets = schedule.getPetIds().stream()
-                .map(pet -> petService.getPetById(pet.getId()))
-                .collect(Collectors.toList());
-        pets.forEach(pet -> {
-            pet.setSchedule(schedule);
-            petService.updatePet(pet);
-        });
-
-        List<Employee> employees = schedule.getEmployeeIds().stream()
-                .map(employee -> employeeService.getEmployeeById(employee.getId()))
-                .collect(Collectors.toList());
-        employees.forEach(employee -> {
-            employee.setSchedule(schedule);
-            employeeService.updateEmployee(employee);
-        });
-
         return scheduleMapper.scheduleToScheduleDTO(schedule);
     }
 

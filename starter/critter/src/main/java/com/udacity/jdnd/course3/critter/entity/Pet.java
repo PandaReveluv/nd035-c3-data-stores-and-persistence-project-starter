@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -19,6 +20,6 @@ public class Pet {
     private String notes;
     @ManyToOne(fetch = FetchType.EAGER)
     private Customer customer;
-    @ManyToOne
-    private Schedule schedule;
+    @ManyToMany(mappedBy = "petIds", cascade = CascadeType.ALL)
+    private List<Schedule> schedule;
 }

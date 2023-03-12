@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,7 +22,6 @@ public class Employee {
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass=DayOfWeek.class)
     private Set<DayOfWeek> daysAvailable;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "schedule_id")
-    private Schedule schedule;
+    @ManyToMany(mappedBy = "employeeIds", cascade = CascadeType.ALL)
+    private List<Schedule> schedule;
 }
