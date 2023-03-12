@@ -8,7 +8,9 @@ import com.udacity.jdnd.course3.critter.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class EmployeeService {
@@ -28,5 +30,12 @@ public class EmployeeService {
             throw new CustomNotFoundException("Cannot found employee with id: " + employeeId);
         }
         return employee.get();
+    }
+
+    public void updateEmployeeAvailability(Set<DayOfWeek> daysAvailable, Long employeeId) {
+
+        Employee employee = getEmployeeById(employeeId);
+        employee.setDaysAvailable(daysAvailable);
+        employeeRepository.save(employee);
     }
 }

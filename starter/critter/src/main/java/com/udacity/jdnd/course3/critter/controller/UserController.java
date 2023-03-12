@@ -8,6 +8,7 @@ import com.udacity.jdnd.course3.critter.mapper.EmployeeMapper;
 import com.udacity.jdnd.course3.critter.service.CustomerService;
 import com.udacity.jdnd.course3.critter.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -65,8 +66,9 @@ public class UserController {
     }
 
     @PutMapping("/employee/{employeeId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void setAvailability(@RequestBody Set<DayOfWeek> daysAvailable, @PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+        employeeService.updateEmployeeAvailability(daysAvailable, employeeId);
     }
 
     @GetMapping("/employee/availability")
