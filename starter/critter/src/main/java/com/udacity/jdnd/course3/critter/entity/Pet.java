@@ -10,12 +10,11 @@ import java.time.LocalDate;
 @Data
 public class Pet {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Enumerated(EnumType.STRING)
     private PetType type;
     private String name;
-    private long ownerId;
     private LocalDate birthDate;
     private String notes;
     @ManyToOne(fetch = FetchType.LAZY)
