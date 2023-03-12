@@ -61,7 +61,7 @@ public class UserController {
         return employeeMapper.employeeToEmployeeDTO(employeeService.addNewEmployee(employeeDTO));
     }
 
-    @PostMapping("/employee/{employeeId}")
+    @GetMapping("/employee/{employeeId}")
     public EmployeeDTO getEmployee(@PathVariable long employeeId) {
         throw new UnsupportedOperationException();
     }

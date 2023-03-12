@@ -11,6 +11,8 @@ import com.udacity.jdnd.course3.critter.repository.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,5 +44,21 @@ public class PetService {
             throw new CustomNotFoundException("Cannot found pet with id: " + petId);
         }
         return pet.get();
+    }
+
+    public List<Pet> getAllPets() {
+        return petRepository.findAll();
+    }
+
+    public List<Pet> getPetsByOwnerId(Long ownerId) {
+
+        List<Pet> result = new ArrayList<>();
+        try {
+            Customer customer = customerService.getCustomerById(ownerId);
+            result = petRepository.findAllByCustomer(customer);
+        } catch (CustomNotFoundException exception) {
+            throw new BadRequestException(exception.getMessage());
+        }
+        return result;
     }
 }
