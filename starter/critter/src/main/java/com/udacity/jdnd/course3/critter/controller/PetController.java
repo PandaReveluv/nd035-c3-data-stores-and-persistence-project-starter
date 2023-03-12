@@ -21,7 +21,6 @@ public class PetController {
 
     @Autowired
     private PetService petService;
-
     @Autowired
     private PetMapper petMapper;
 

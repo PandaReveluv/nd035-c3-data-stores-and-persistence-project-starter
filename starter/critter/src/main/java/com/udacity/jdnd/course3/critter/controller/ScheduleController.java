@@ -27,17 +27,12 @@ public class ScheduleController {
 
     @Autowired
     private ScheduleService scheduleService;
-
     @Autowired
     private ScheduleMapper scheduleMapper;
     @Autowired
     private PetService petService;
     @Autowired
-    private PetMapper petMapper;
-    @Autowired
     private EmployeeService employeeService;
-    @Autowired
-    private EmployeeMapper employeeMapper;
 
     @PostMapping
     public ScheduleDTO createSchedule(@RequestBody ScheduleDTO scheduleDTO) {
@@ -83,11 +78,21 @@ public class ScheduleController {
 
     @GetMapping("/employee/{employeeId}")
     public List<ScheduleDTO> getScheduleForEmployee(@PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+
+        List<Schedule> schedules = scheduleService.getSchedulesByEmployeeId(employeeId);
+        return schedules.stream()
+                .distinct()
+                .map(schedule -> scheduleMapper.scheduleToScheduleDTO(schedule))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/customer/{customerId}")
     public List<ScheduleDTO> getScheduleForCustomer(@PathVariable long customerId) {
-        throw new UnsupportedOperationException();
+
+        List<Schedule> schedules = scheduleService.getSchedulesByCustomerId(customerId);
+        return schedules.stream()
+                .distinct()
+                .map(schedule -> scheduleMapper.scheduleToScheduleDTO(schedule))
+                .collect(Collectors.toList());
     }
 }

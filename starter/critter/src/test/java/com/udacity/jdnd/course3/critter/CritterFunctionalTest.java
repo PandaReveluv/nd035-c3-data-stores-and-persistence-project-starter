@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
@@ -33,8 +34,8 @@ import java.util.stream.IntStream;
  *
  * These tests should all pass once the project is complete.
  */
-@Transactional
 @SpringBootTest(classes = CritterApplication.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class CritterFunctionalTest {
 
     @Autowired
@@ -47,6 +48,7 @@ public class CritterFunctionalTest {
     private ScheduleController scheduleController;
 
     @Test
+    @Transactional
     public void testCreateCustomer(){
         CustomerDTO customerDTO = createCustomerDTO();
         CustomerDTO newCustomer = userController.saveCustomer(customerDTO);
@@ -57,6 +59,7 @@ public class CritterFunctionalTest {
     }
 
     @Test
+    @Transactional
     public void testCreateEmployee(){
         EmployeeDTO employeeDTO = createEmployeeDTO();
         EmployeeDTO newEmployee = userController.saveEmployee(employeeDTO);
@@ -92,6 +95,7 @@ public class CritterFunctionalTest {
     }
 
     @Test
+    @Transactional
     public void testFindPetsByOwner() {
         CustomerDTO customerDTO = createCustomerDTO();
         CustomerDTO newCustomer = userController.saveCustomer(customerDTO);
@@ -124,6 +128,7 @@ public class CritterFunctionalTest {
     }
 
     @Test
+    @Transactional
     public void testChangeEmployeeAvailability() {
         EmployeeDTO employeeDTO = createEmployeeDTO();
         EmployeeDTO emp1 = userController.saveEmployee(employeeDTO);
@@ -137,6 +142,7 @@ public class CritterFunctionalTest {
     }
 
     @Test
+    @Transactional
     public void testFindEmployeesByServiceAndTime() {
         EmployeeDTO emp1 = createEmployeeDTO();
         EmployeeDTO emp2 = createEmployeeDTO();
@@ -174,6 +180,7 @@ public class CritterFunctionalTest {
     }
 
     @Test
+    @Transactional
     public void testSchedulePetsForServiceWithEmployee() {
         EmployeeDTO employeeTemp = createEmployeeDTO();
         employeeTemp.setDaysAvailable(Sets.newHashSet(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY));
@@ -198,6 +205,7 @@ public class CritterFunctionalTest {
     }
 
     @Test
+    @Transactional
     public void testFindScheduleByEntities() {
         ScheduleDTO sched1 = populateSchedule(1, 2, LocalDate.of(2019, 12, 25), Sets.newHashSet(EmployeeSkill.FEEDING, EmployeeSkill.WALKING));
         ScheduleDTO sched2 = populateSchedule(3, 1, LocalDate.of(2019, 12, 26), Sets.newHashSet(EmployeeSkill.PETTING));

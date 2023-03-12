@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Set;
 
 @Repository
-@Transactional
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     List<Employee> findAllBySkillsIn(Set<EmployeeSkill> skills);

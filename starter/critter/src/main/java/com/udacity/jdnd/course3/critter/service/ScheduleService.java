@@ -12,12 +12,14 @@ import com.udacity.jdnd.course3.critter.mapper.ScheduleMapper;
 import com.udacity.jdnd.course3.critter.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 @Service
+@Transactional
 public class ScheduleService {
 
     @Autowired
@@ -56,6 +58,29 @@ public class ScheduleService {
         List<Schedule> result;
         try {
             result = scheduleRepository.findAllByPetIdsIn(Collections.singletonList(petService.getPetById(petId)));
+        } catch (CustomNotFoundException exception) {
+            throw new BadRequestException(exception.getMessage());
+        }
+        return result;
+    }
+
+    public List<Schedule> getSchedulesByEmployeeId(Long employeeId) {
+
+        List<Schedule> result;
+        try {
+            result = scheduleRepository.findAllByEmployeeIdsIn(Collections.singletonList(employeeService.getEmployeeById(employeeId)));
+        } catch (CustomNotFoundException exception) {
+            throw new BadRequestException(exception.getMessage());
+        }
+        return result;
+    }
+
+    public List<Schedule> getSchedulesByCustomerId(Long customerId) {
+
+        List<Schedule> result;
+        try {
+            List<Pet> pets = petService.getPetsByOwnerId(customerId);
+            result = scheduleRepository.findAllByPetIdsIn(pets);
         } catch (CustomNotFoundException exception) {
             throw new BadRequestException(exception.getMessage());
         }

@@ -31,13 +31,10 @@ public class UserController {
 
     @Autowired
     private CustomerService customerService;
-
     @Autowired
     private EmployeeService employeeService;
-
     @Autowired
     private CustomerMapper customerMapper;
-
     @Autowired
     private EmployeeMapper employeeMapper;
 
