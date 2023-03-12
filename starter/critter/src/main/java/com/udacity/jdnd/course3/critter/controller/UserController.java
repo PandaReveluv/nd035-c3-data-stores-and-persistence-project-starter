@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -73,7 +74,10 @@ public class UserController {
 
     @GetMapping("/employee/availability")
     public List<EmployeeDTO> findEmployeesForService(@RequestBody EmployeeRequestDTO employeeDTO) {
-        throw new UnsupportedOperationException();
+        List<EmployeeDTO> employeeDTOs = new ArrayList<>();
+        employeeService.findEmployeesForService(employeeDTO)
+                .forEach(employee -> employeeDTOs.add(employeeMapper.employeeToEmployeeDTO(employee)));
+        return employeeDTOs;
     }
 
 }
