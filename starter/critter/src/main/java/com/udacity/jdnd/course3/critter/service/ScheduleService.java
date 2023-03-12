@@ -1,8 +1,6 @@
 package com.udacity.jdnd.course3.critter.service;
 
-import com.udacity.jdnd.course3.critter.dto.pet.PetDTO;
 import com.udacity.jdnd.course3.critter.dto.schedule.ScheduleDTO;
-import com.udacity.jdnd.course3.critter.dto.users.EmployeeDTO;
 import com.udacity.jdnd.course3.critter.entity.Employee;
 import com.udacity.jdnd.course3.critter.entity.Pet;
 import com.udacity.jdnd.course3.critter.entity.Schedule;
