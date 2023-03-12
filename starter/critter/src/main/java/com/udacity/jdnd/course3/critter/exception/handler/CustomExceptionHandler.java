@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.udacity.jdnd.course3.critter.dto.pet.PetType;
 import com.udacity.jdnd.course3.critter.dto.users.EmployeeSkill;
 import com.udacity.jdnd.course3.critter.exception.BadRequestException;
-import com.udacity.jdnd.course3.critter.exception.CustomerNotFoundException;
+import com.udacity.jdnd.course3.critter.exception.CustomNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,7 +16,7 @@ import java.util.Arrays;
 @ControllerAdvice
 public class CustomExceptionHandler {
 
-    @ExceptionHandler({CustomerNotFoundException.class})
+    @ExceptionHandler({CustomNotFoundException.class})
     public ResponseEntity<String> handleNotFoundException(Exception e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }

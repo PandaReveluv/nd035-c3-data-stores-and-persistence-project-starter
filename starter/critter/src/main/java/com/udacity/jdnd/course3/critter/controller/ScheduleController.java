@@ -1,6 +1,9 @@
 package com.udacity.jdnd.course3.critter.controller;
 
 import com.udacity.jdnd.course3.critter.dto.schedule.ScheduleDTO;
+import com.udacity.jdnd.course3.critter.mapper.ScheduleMapper;
+import com.udacity.jdnd.course3.critter.service.ScheduleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,9 +15,16 @@ import java.util.List;
 @RequestMapping("/schedule")
 public class ScheduleController {
 
+    @Autowired
+    private ScheduleService scheduleService;
+
+    @Autowired
+    private ScheduleMapper scheduleMapper;
+
     @PostMapping
     public ScheduleDTO createSchedule(@RequestBody ScheduleDTO scheduleDTO) {
-        throw new UnsupportedOperationException();
+
+        return scheduleMapper.scheduleToScheduleDTO(scheduleService.addNewSchedule(scheduleDTO));
     }
 
     @GetMapping

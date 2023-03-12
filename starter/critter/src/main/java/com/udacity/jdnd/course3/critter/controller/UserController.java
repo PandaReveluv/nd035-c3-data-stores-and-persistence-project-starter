@@ -3,6 +3,8 @@ package com.udacity.jdnd.course3.critter.controller;
 import com.udacity.jdnd.course3.critter.dto.users.CustomerDTO;
 import com.udacity.jdnd.course3.critter.dto.users.EmployeeDTO;
 import com.udacity.jdnd.course3.critter.dto.users.EmployeeRequestDTO;
+import com.udacity.jdnd.course3.critter.mapper.CustomerMapper;
+import com.udacity.jdnd.course3.critter.mapper.EmployeeMapper;
 import com.udacity.jdnd.course3.critter.service.CustomerService;
 import com.udacity.jdnd.course3.critter.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +31,16 @@ public class UserController {
     @Autowired
     private EmployeeService employeeService;
 
+    @Autowired
+    private CustomerMapper customerMapper;
+
+    @Autowired
+    private EmployeeMapper employeeMapper;
+
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
 
-        CustomerDTO result = customerService.addNewCustomer(customerDTO);
-        return result;
+        return customerMapper.customerToCustomerDTO(customerService.addNewCustomer(customerDTO));
     }
 
     @GetMapping("/customer")
@@ -49,7 +56,7 @@ public class UserController {
     @PostMapping("/employee")
     public EmployeeDTO saveEmployee(@RequestBody @Valid EmployeeDTO employeeDTO) {
 
-        return employeeService.addNewEmployee(employeeDTO);
+        return employeeMapper.employeeToEmployeeDTO(employeeService.addNewEmployee(employeeDTO));
     }
 
     @PostMapping("/employee/{employeeId}")

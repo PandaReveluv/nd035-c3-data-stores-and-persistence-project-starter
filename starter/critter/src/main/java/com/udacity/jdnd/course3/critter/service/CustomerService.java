@@ -2,7 +2,7 @@ package com.udacity.jdnd.course3.critter.service;
 
 import com.udacity.jdnd.course3.critter.dto.users.CustomerDTO;
 import com.udacity.jdnd.course3.critter.entity.Customer;
-import com.udacity.jdnd.course3.critter.exception.CustomerNotFoundException;
+import com.udacity.jdnd.course3.critter.exception.CustomNotFoundException;
 import com.udacity.jdnd.course3.critter.mapper.CustomerMapper;
 import com.udacity.jdnd.course3.critter.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +19,8 @@ public class CustomerService {
     @Autowired
     private CustomerMapper customerMapper;
 
-    public CustomerDTO addNewCustomer(CustomerDTO customerDTO) {
-        Customer customer = customerRepository.save(customerMapper.customerDTOToCustomer(customerDTO));
-        return customerMapper.customerToCustomerDTO(customer);
+    public Customer addNewCustomer(CustomerDTO customerDTO) {
+        return customerRepository.save(customerMapper.customerDTOToCustomer(customerDTO));
     }
 
     public boolean isCustomerExisted(Long customerId) {
@@ -31,7 +30,7 @@ public class CustomerService {
     public Customer getCustomerById(Long customerId) {
         Optional<Customer> customer = customerRepository.findById(customerId);
         if (!customer.isPresent()) {
-            throw new CustomerNotFoundException("Cannot found customer with id: " + customerId);
+            throw new CustomNotFoundException("Cannot found customer with id: " + customerId);
         }
         return customer.get();
     }

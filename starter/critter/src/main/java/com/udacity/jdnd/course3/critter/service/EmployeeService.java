@@ -1,11 +1,16 @@
 package com.udacity.jdnd.course3.critter.service;
 
+import com.udacity.jdnd.course3.critter.dto.pet.PetDTO;
 import com.udacity.jdnd.course3.critter.dto.users.EmployeeDTO;
 import com.udacity.jdnd.course3.critter.entity.Employee;
+import com.udacity.jdnd.course3.critter.entity.Pet;
+import com.udacity.jdnd.course3.critter.exception.CustomNotFoundException;
 import com.udacity.jdnd.course3.critter.mapper.EmployeeMapper;
 import com.udacity.jdnd.course3.critter.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -15,8 +20,15 @@ public class EmployeeService {
     @Autowired
     private EmployeeMapper employeeMapper;
 
-    public EmployeeDTO addNewEmployee(EmployeeDTO employeeDTO) {
-        Employee employee = employeeRepository.save(employeeMapper.employeeDTOToEmployee(employeeDTO, null));
-        return employeeMapper.employeeToEmployeeDTO(employee);
+    public Employee addNewEmployee(EmployeeDTO employeeDTO) {
+        return employeeRepository.save(employeeMapper.employeeDTOToEmployee(employeeDTO, null));
+    }
+
+    public Employee getEmployeeById(Long employeeId) {
+        Optional<Employee> employee = employeeRepository.findById(employeeId);
+        if (!employee.isPresent()) {
+            throw new CustomNotFoundException("Cannot found employee with id: " + employeeId);
+        }
+        return employee.get();
     }
 }
