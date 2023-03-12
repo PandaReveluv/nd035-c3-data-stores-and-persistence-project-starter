@@ -29,6 +29,10 @@ public class EmployeeService {
         return employeeRepository.save(employeeMapper.employeeDTOToEmployee(employeeDTO, null));
     }
 
+    public Employee updateEmployee(Employee employee) {
+        return employeeRepository.save(employee);
+    }
+
     public Employee getEmployeeById(Long employeeId) {
         Optional<Employee> employee = employeeRepository.findById(employeeId);
         if (!employee.isPresent()) {

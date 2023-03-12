@@ -6,12 +6,15 @@ import com.udacity.jdnd.course3.critter.entity.Pet;
 import com.udacity.jdnd.course3.critter.entity.Schedule;
 import com.udacity.jdnd.course3.critter.exception.BadRequestException;
 import com.udacity.jdnd.course3.critter.exception.CustomNotFoundException;
+import com.udacity.jdnd.course3.critter.mapper.EmployeeMapper;
+import com.udacity.jdnd.course3.critter.mapper.PetMapper;
 import com.udacity.jdnd.course3.critter.mapper.ScheduleMapper;
 import com.udacity.jdnd.course3.critter.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -25,6 +28,10 @@ public class ScheduleService {
     private PetService petService;
     @Autowired
     private EmployeeService employeeService;
+    @Autowired
+    private PetMapper petMapper;
+    @Autowired
+    private EmployeeMapper employeeMapper;
 
     public Schedule addNewSchedule(ScheduleDTO scheduleDTO) {
         List<Pet> pets = new ArrayList<>();
@@ -37,5 +44,21 @@ public class ScheduleService {
             throw new BadRequestException(exception.getMessage());
         }
         return scheduleRepository.save(scheduleMapper.scheduleDTOToSchedule(scheduleDTO, pets, employees));
+    }
+
+    public List<Schedule> getAllSchedules() {
+
+        return scheduleRepository.findAll();
+    }
+
+    public List<Schedule> getSchedulesByPetId(Long petId) {
+
+        List<Schedule> result;
+        try {
+            result = scheduleRepository.findAllByPetIdsIn(Collections.singletonList(petService.getPetById(petId)));
+        } catch (CustomNotFoundException exception) {
+            throw new BadRequestException(exception.getMessage());
+        }
+        return result;
     }
 }

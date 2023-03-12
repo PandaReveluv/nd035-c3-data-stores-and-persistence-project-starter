@@ -38,6 +38,11 @@ public class PetService {
         return result;
     }
 
+    public Pet updatePet(Pet pet) {
+
+        return petRepository.save(pet);
+    }
+
     public Pet getPetById(Long petId) {
         Optional<Pet> pet = petRepository.findById(petId);
         if (!pet.isPresent()) {
