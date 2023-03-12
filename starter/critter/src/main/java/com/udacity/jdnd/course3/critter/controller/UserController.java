@@ -42,6 +42,7 @@ public class UserController {
     private EmployeeMapper employeeMapper;
 
     @PostMapping("/customer")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
 
         return customerMapper.customerToCustomerDTO(customerService.addNewCustomer(customerDTO));
@@ -63,6 +64,7 @@ public class UserController {
     }
 
     @PostMapping("/employee")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public EmployeeDTO saveEmployee(@RequestBody @Valid EmployeeDTO employeeDTO) {
 
         return employeeMapper.employeeToEmployeeDTO(employeeService.addNewEmployee(employeeDTO));
@@ -70,7 +72,8 @@ public class UserController {
 
     @GetMapping("/employee/{employeeId}")
     public EmployeeDTO getEmployee(@PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+
+        return employeeMapper.employeeToEmployeeDTO(employeeService.getEmployeeById(employeeId));
     }
 
     @PutMapping("/employee/{employeeId}")
@@ -86,5 +89,4 @@ public class UserController {
                 .forEach(employee -> employeeDTOs.add(employeeMapper.employeeToEmployeeDTO(employee)));
         return employeeDTOs;
     }
-
 }

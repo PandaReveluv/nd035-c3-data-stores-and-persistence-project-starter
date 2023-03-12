@@ -5,6 +5,7 @@ import com.udacity.jdnd.course3.critter.entity.Pet;
 import com.udacity.jdnd.course3.critter.mapper.PetMapper;
 import com.udacity.jdnd.course3.critter.service.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,6 +26,7 @@ public class PetController {
     private PetMapper petMapper;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public PetDTO savePet(@RequestBody @Valid PetDTO petDTO) {
 
         return petMapper.petToPetDTO(petService.addNewPet(petDTO));
